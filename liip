@@ -1,0 +1,34 @@
+#!/usr/bin/python
+#
+#  This is a tool to automatically find out your internal ip in linux 
+#  the routin is to type in ifconfig and search over a multiple interface cards and finally figure out your ip...
+#  This is a GUI tool to pop out the internal ip->
+#  Incase of having multiple interfaces like wl0 wl1...eth0,eth1...etc this tool will display the right ip with which the system is connected to the internet
+#  If its disconnected then shows your local loopback
+#  
+#  
+#  visit The project url at  http://goo.gl/XevBi
+#
+#	Author:  Sadhanandh Iyer
+#
+#	E-mail:  sadhanandhiyer[@]gmail[.]com
+#
+#	Date:    30/25/2011
+#
+#	Profile: http://goo.gl/IVg3g
+
+import commands
+from Tkinter import *
+#strin = commands.getoutput(r"netstat -r |grep default|awk {'print $8'} |xargs ifconfig|grep 'inet addr' |awk -F: {'print $2'}|awk {'print $1'}")
+strin = commands.getoutput(r"route -n |grep '^0.0.0.0'|awk {'print $8'}|xargs ifconfig|grep 'inet addr'|awk -F: {'print $2'}|awk {'print $1'}")
+root=Tk()
+root.title('network ip')
+s=StringVar()
+lab=Label(root, textvariable=s)
+strin="Your Internal Network ip :"+strin
+s.set(strin)
+root.protocol("WM_DELETE_WINDOW",root.quit)
+lab.pack()
+button = Button(root, text="Ok", command=root.quit)
+button.pack()
+root.mainloop()
